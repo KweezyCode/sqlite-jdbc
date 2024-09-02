@@ -39,8 +39,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.stream.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sqlite.util.LibraryLoaderUtil;
 import org.sqlite.util.OSInfo;
 import org.sqlite.util.StringUtils;
@@ -57,8 +55,6 @@ import org.sqlite.util.StringUtils;
  * @author leo
  */
 public class SQLiteJDBCLoader {
-    private static final Logger logger = LoggerFactory.getLogger(SQLiteJDBCLoader.class);
-
     private static final String LOCK_EXT = ".lck";
     private static boolean extracted = false;
 
@@ -101,12 +97,12 @@ public class SQLiteJDBCLoader {
                                     try {
                                         Files.delete(nativeLib);
                                     } catch (Exception e) {
-                                        logger.error("Failed to delete old native lib", e);
+                                        System.err.println("Failed to delete old native lib" + e);
                                     }
                                 }
                             });
         } catch (IOException e) {
-            logger.error("Failed to open directory", e);
+            System.err.println("Failed to open directory" + e);
         }
     }
 
@@ -222,7 +218,7 @@ public class SQLiteJDBCLoader {
             }
             return loadNativeLibrary(targetFolder, extractedLibFileName);
         } catch (IOException e) {
-            logger.error("Unexpected IOException", e);
+            System.err.println("Unexpected IOException" + e);
             return false;
         }
     }
@@ -246,7 +242,7 @@ public class SQLiteJDBCLoader {
             connection.setUseCaches(false);
             return connection.getInputStream();
         } catch (IOException e) {
-            logger.error("Could not connect", e);
+            System.err.println("Could not connect" + e);
             return null;
         }
     }
@@ -267,10 +263,10 @@ public class SQLiteJDBCLoader {
                 return true;
             } catch (UnsatisfiedLinkError e) {
 
-                logger.error(
-                        "Failed to load native library: {}. osinfo: {}",
-                        name,
-                        OSInfo.getNativeLibFolderPathForCurrentOS(),
+                System.err.println(
+                        "Failed to load native library: {}. osinfo: {}" +
+                        name +
+                        OSInfo.getNativeLibFolderPathForCurrentOS() +
                         e);
                 return false;
             }
@@ -285,7 +281,7 @@ public class SQLiteJDBCLoader {
             System.loadLibrary(LibraryLoaderUtil.NATIVE_LIB_BASE_NAME);
             return true;
         } catch (UnsatisfiedLinkError e) {
-            logger.error("Failed to load native library through System.loadLibrary", e);
+            System.err.println("Failed to load native library through System.loadLibrary" + e);
             return false;
         }
     }
@@ -417,8 +413,7 @@ public class SQLiteJDBCLoader {
             } catch (IOException e) {
                 // inline creation of logger to avoid build-time initialization of the logging
                 // framework in native-image
-                LoggerFactory.getLogger(VersionHolder.class)
-                        .error("Could not read version from file: {}", versionFile, e);
+                System.err.println("Could not read version from file: {}" + versionFile + e);
             }
             VERSION = version;
         }

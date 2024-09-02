@@ -19,18 +19,16 @@ package org.sqlite;
 import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Logger;
-import org.slf4j.LoggerFactory;
 import org.sqlite.jdbc4.JDBC4Connection;
 
 public class JDBC implements Driver {
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(JDBC.class);
     public static final String PREFIX = "jdbc:sqlite:";
 
     static {
         try {
             DriverManager.registerDriver(new JDBC());
         } catch (SQLException e) {
-            logger.error("Could not register driver", e);
+            System.err.println("Could not register driver" + e);
         }
     }
 

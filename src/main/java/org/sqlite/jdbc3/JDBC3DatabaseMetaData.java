@@ -21,8 +21,6 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sqlite.SQLiteConnection;
 import org.sqlite.core.CoreDatabaseMetaData;
 import org.sqlite.core.CoreStatement;
@@ -964,14 +962,14 @@ public abstract class JDBC3DatabaseMetaData extends CoreDatabaseMetaData {
                         try {
                             rsColAutoinc.close();
                         } catch (Exception e) {
-                            LogHolder.logger.error("Could not close ResultSet", e);
+                            System.err.println("Could not close ResultSet" + e);
                         }
                     }
                     if (statColAutoinc != null) {
                         try {
                             statColAutoinc.close();
                         } catch (Exception e) {
-                            LogHolder.logger.error("Could not close statement", e);
+                            System.err.println("Could not close statement" + e);
                         }
                     }
                 }
@@ -1125,7 +1123,7 @@ public abstract class JDBC3DatabaseMetaData extends CoreDatabaseMetaData {
                 try {
                     rs.close();
                 } catch (Exception e) {
-                    LogHolder.logger.error("Could not close ResultSet", e);
+                    System.err.println("Could not close ResultSet" + e);
                 }
             }
         }
@@ -2241,13 +2239,5 @@ public abstract class JDBC3DatabaseMetaData extends CoreDatabaseMetaData {
             name = name.substring(1, name.length() - 1);
         }
         return name;
-    }
-
-    /**
-     * Class-wrapper around the logger object to avoid build-time initialization of the logging
-     * framework in native-image
-     */
-    private static class LogHolder {
-        private static final Logger logger = LoggerFactory.getLogger(JDBC3DatabaseMetaData.class);
     }
 }
