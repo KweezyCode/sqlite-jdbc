@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.3</junit.version>
-        <surefire.version>3.4.0</surefire.version>
+        <surefire.version>3.5.0</surefire.version>
         <archunit.version>1.3.0</archunit.version>
         <graalvm.version>24.0.2</graalvm.version>
         <java9.sourceDirectory>${project.basedir}/src/main/java9</java9.sourceDirectory>
@@ -199,7 +199,7 @@
             <plugin>
                 <groupId>org.jreleaser</groupId>
                 <artifactId>jreleaser-maven-plugin</artifactId>
-                <version>1.13.1</version>
+                <version>1.14.0</version>
                 <configuration>
                     <configFile>jreleaser.yml</configFile>
                 </configuration>
@@ -299,7 +299,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.8.0</version>
+                        <version>3.10.0</version>
                         <configuration>
                             <sourcepath>src/main/java</sourcepath>
                             <additionalOptions>-Xdoclint:none</additionalOptions>
@@ -453,7 +453,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.12.0</version>
+            <version>5.13.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
